@@ -21,10 +21,15 @@ namespace DevIO.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetProperties()
-                    .Where(p => p.ClrType == typeof(string))))
-            { property.SetColumnType("varchar(100)"); }
+            //foreach (var property in modelBuilder.Model.GetEntityTypes()
+            //    .SelectMany(e => e.GetProperties()
+            //        .Where(p => p.ClrType == typeof(string))))
+            //{ property.SetColumnType("varchar(100)"); }
+
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Produto>()
+                .Property(p => p.Valor)
+                .HasColumnType("decimal(18,2)");
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MeuDbContext).Assembly);
 
