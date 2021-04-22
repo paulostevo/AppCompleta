@@ -127,10 +127,12 @@ namespace DevIO.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var fornecedorViewModel = await ObterFornecedorEndereco(id);
-
+            var fornecedorViewModel = await ObterFornecedorEndereco(id);   
+            
             if (fornecedorViewModel == null) return NotFound();
+            //var endereco = await _enderecoRepository.ObterPorId(fornecedorViewModel.Endereco.Id);
 
+            await _enderecoRepository.Remover(fornecedorViewModel.Endereco.Id);
             await _fornecedorRepository.Remover(id);
 
             return RedirectToAction("Index");
